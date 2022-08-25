@@ -1,0 +1,74 @@
+﻿@model IEnumerable<projeto.Models.clientes>
+
+@{
+    ViewBag.Title = "Clientes";
+}
+
+<h2>Clientes</h2>
+
+<p>
+    @Html.ActionLink("Novo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sobrenome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            Data de Cadastro
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sobrenome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCadastro)
+            </td>
+
+            @if (((@DateTime.Now.Year - (DateTime.Parse(item.DataCadastro)).Year) >= 5) && item.qtd < 2000)
+            {
+                <td>Prata</td>
+            }
+            else if (item.qtd >= 2000 && item.qtd < 5000)
+            {
+            <td>Ouro</td>
+            }
+            else if (item.qtd >= 5000 && item.qtd < 10000)
+            {
+            <td>Platina</td>
+            }
+            else if (item.qtd >= 1000)
+            {
+            <td>Diamante</td>
+            }
+
+
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.ClienteId }) |
+                @Html.ActionLink("Detalhes", "Details", new { id = item.ClienteId }) |
+                @Html.ActionLink("Deletar", "Delete", new { id = item.ClienteId })
+            </td>
+        </tr>
+    }
+
+</table>
